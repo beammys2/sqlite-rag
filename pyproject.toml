@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=61.0", "build", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sqlite-rag"
+dynamic = ["version"]
+description = "Hybird search with SQLite AI and SQLite Vector"
+authors = [{name = "SQLite AI Team"}]
+requires-python = ">=3.10"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "typer",
+    "huggingface_hub[hf_transfer]",
+    "markitdown[docx]",
+    "markitdown[outlook]",
+    "markitdown[pdf]",
+    "markitdown[pptx]",
+    "markitdown[xls]",
+    "markitdown[xlsx]",
+    "python-frontmatter",
+    "prompt-toolkit",
+    "sqlite-ai",
+    "sqliteai-vector"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+    "black",
+    "flake8",
+    "bandit",
+    "isort",
+    "pre-commit",
+    "pyarrow",
+    "pandas",
+    "psutil",
+    "twine",
+    "build",
+]
+
+[project.urls]
+Homepage = "https://sqlite.ai"
+Repository = "https://github.com/sqliteai/sqlite-rag"
+Issues = "https://github.com/sqliteai/sqlite-rag/issues"
+
+[project.scripts]
+sqlite-rag = "sqlite_rag.cli:cli"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["sqlite_rag*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "sqlite_rag._version.__version__"}
+
+[tool.isort]
+# make the tools compatible to each other
+profile = "black"
+
+[tool.pytest.ini_options]
+log_level = "INFO"
+testpaths = [
+    "tests"
+]
+pythonpath = [
+    "src"
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+]
